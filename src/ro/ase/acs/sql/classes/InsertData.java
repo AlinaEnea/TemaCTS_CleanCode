@@ -8,16 +8,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class InsertData implements DatabaseOperation {
+    private static final String INSERT_SQL = "INSERT INTO employees(id, name, address, salary) VALUES (?, ?, ?, ?)";
     @Override
     public void execute(Connection connection) throws SQLException {
         String sqlInsert = "INSERT INTO employees VALUES(1, 'Popescu Ion', 'Bucharest', 4000)";
+
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlInsert);
         statement.close();
 
-        String sqlInsertWithParams = "INSERT INTO employees VALUES (?,?,?,?)";
-        PreparedStatement preparedStatement =
-                connection.prepareStatement(sqlInsertWithParams);
+        PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL);
+
         preparedStatement.setInt(1, 2);
         preparedStatement.setString(2, "Ionescu Vasile");
         preparedStatement.setString(3, "Brasov");

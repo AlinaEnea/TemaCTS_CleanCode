@@ -8,22 +8,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ReadData implements DatabaseOperation {
+    private static final String SELECT_SQL = "SELECT * FROM employees";
     @Override
     public void execute(Connection connection) throws SQLException {
-        String sqlSelect = "SELECT * FROM employees";
         Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery(sqlSelect);
-        while(rs.next()) {
-            int id = rs.getInt("id");
+        ResultSet resultSet = statement.executeQuery(SELECT_SQL);
+        while(resultSet.next()) {
+            int id = resultSet.getInt("id");
             System.out.println("id: " + id);
-            String name = rs.getString(2);
+            String name = resultSet.getString(2);
             System.out.println("name: " + name);
-            String address = rs.getString("address");
+            String address = resultSet.getString("address");
             System.out.println("address: " + address);
-            double salary = rs.getDouble("salary");
+            double salary = resultSet.getDouble("salary");
             System.out.println("salary: " + salary);
         }
-        rs.close();
+        resultSet.close();
         statement.close();
     }
 }
